@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Adventure - Bahasa Inggris Kelas 5 SD/MI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
+            min-height: 100vh;
+        }
+        .animate-bounce-slow {
+            animation: bounce 3s infinite;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #certificate-print-area, #certificate-print-area * {
+                visibility: visible;
+            }
+            #certificate-print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 20px;
+                box-shadow: none !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <header class="bg-blue-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">🚀</span>
+                <div>
+                    <h1 class="font-bold text-lg md:text-xl tracking-wide">ENGLISH ADVENTURE</h1>
+                    <p class="text-xs text-blue-200">Grade 5 SD/MI – Semester 1</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 mt-2 sm:mt-0">
+                <button id="sound-toggle-btn" onclick="toggleSound()" class="bg-blue-500 hover:bg-blue-400 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center space-x-1 transition shadow">
+                    <span id="sound-icon">🔊</span> <span id="sound-text">Suara On</span>
+                </button>
+                <div id="user-badge" class="hidden bg-blue-700 text-blue-100 px-3 py-1.5 rounded-full text-xs font-medium border border-blue-400">
+                    👤 <span id="display-username"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6 my-auto">
+
+        <!-- 1. WELCOME SCREEN -->
+        <section id="screen-welcome" class="bg-white rounded-3xl shadow-2xl p-6 sm:p-10 text-center border-4 border-blue-400 transition-all duration-300">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-6xl sm:text-7xl mb-4 animate-bounce-slow">🌍📚✨</div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-600 mb-2">ENGLISH ADVENTURE</h2>
+                <p class="text-lg sm:text-xl font-semibold text-slate-600 mb-6">Let's Learn English – Grade 5 SD/MI</p>
+                
+                <div class="bg-blue-50 border-2 border-dashed border-blue-300 p-6 rounded-2xl mb-6 text-left">
+                    <label for="username-input" class="block font-bold text-blue-900 mb-2 text-sm sm:text-base">
+                        ✍️ Masukkan Nama Kamu (Enter Your Name):
+                    </label>
+                    <input type="text" id="username-input" placeholder="Contoh: Budi Santoso" 
+                        class="w-full px-4 py-3 rounded-xl border-2 border-blue-300 focus:outline-none focus:border-blue-600 text-lg font-medium bg-white shadow-inner">
+                    <p id="name-error" class="text-red-500 text-xs mt-1 hidden">Nama wajib diisi sebelum memulai!</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8 text-xs font-medium text-slate-600">
+                    <div class="bg-amber-50 p-3 rounded-xl border border-amber-200">📖 Bab 1: Eksplorasi Gerak</div>
+                    <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">🧠 Bab 2: Berpikir Cerdas, Bergerak Taktis</div>
+                    <div class="bg-purple-50 p-3 rounded-xl border border-purple-200">⚖️ Bab 3: Aturan, Bermain Seru</div>
+                    <div class="bg-sky-50 p-3 rounded-xl border border-sky-200">🏆 50 Soal & Sertifikat</div>
+                </div>
+
+                <button onclick="handleStartLearning()" class="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-lg transform transition hover:scale-105 active:scale-95 flex items-center justify-center mx-auto space-x-2">
+                    <span>🚀 START LEARNING</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. INSTRUCTIONS SCREEN -->
+        <section id="screen-instructions" class="hidden bg-white rounded-3xl shadow-2xl p-6 sm:p-10 border-4 border-emerald-400">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-6">
+                    <span class="text-5xl">📋</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-2">PETUNJUK PERMAINAN</h2>
+                    <p class="text-slate-500 text-sm">Panduan sebelum memulai petualangan belajarmu</p>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 mb-8 space-y-3 text-sm sm:text-base text-slate-700">
+                    <div class="flex items-start space-x-3"><span class="font-bold text-emerald-600">1.</span><span>Masukkan nama terlebih dahulu pada halaman awal.</span></div>
+                    <div class="flex items-start space-x-3"><span class="font-bold text-emerald-600">2.</span><span>Pelajari materi setiap bab dengan saksama di Menu Materi.</span></div>
+                    <div class="flex items-start space-x-3"><span class="font-bold text-emerald-600">3.</span><span>Kerjakan tepat 50 soal pilihan ganda (Bab 1: 17 soal, Bab 2: 17 soal, Bab 3: 16 soal).</span></div>
+                    <div class="flex items-start space-x-3"><span class="font-bold text-emerald-600">4.</span><span>Setiap soal memiliki 4 pilihan jawaban dengan 1 jawaban benar.</span></div>
+                    <div class="flex items-start space-x-3"><span class="font-bold text-emerald-600">5.</span><span>Setiap jawaban benar mendapatkan 20 poin (Skor maksimal 1.000 poin).</span></div>
+                    <div class="flex items-start space-x-3"><span class="font-bold text-emerald-600">6.</span><span>Baca pembahasan setelah menjawab untuk memperkaya pemahaman.</span></div>
+                    <div class="flex items-start space-x-3"><span class="font-bold text-emerald-600">7.</span><span>Kamu dapat kembali ke materi kapan saja tanpa kehilangan progres kuis.</span></div>
+                    <div class="flex items-start space-x-3"><span class="font-bold text-emerald-600">8.</span><span>Selesaikan semua soal untuk mendapatkan sertifikat digital kelulusan.</span></div>
+                </div>
+
+                <div class="text-center">
+                    <button onclick="goToLessonMenu()" class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-lg transform transition hover:scale-105 active:scale-95 inline-flex items-center space-x-2">
+                        <span>📚 LET'S LEARN!</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. LESSON MENU SCREEN -->
+        <section id="screen-lessons" class="hidden bg-white rounded-3xl shadow-2xl p-6 sm:p-8 border-4 border-indigo-400">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-indigo-700">📚 MENU MATERI PEMBELAJARAN</h2>
+                    <p class="text-slate-500 text-sm">Pilih bab untuk mempelajari kosakata, ungkapan, dan kalimat</p>
+                </div>
+                <button onclick="startQuizFromMenu()" class="mt-4 sm:mt-0 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 text-white font-bold px-6 py-3 rounded-xl shadow-md transform transition hover:scale-105 flex items-center space-x-2">
+                    <span>⚡ MULAI KUIS (START QUIZ)</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+                <!-- Chapter 1 Card -->
+                <div onclick="openChapter(1)" class="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-5 shadow-md hover:shadow-xl cursor-pointer transform transition hover:-translate-y-1">
+                    <div class="text-3xl mb-2">🏃‍♂️</div>
+                    <span class="bg-amber-200 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-full">BAB 1</span>
+                    <h3 class="font-extrabold text-amber-900 text-lg mt-2">EKSPLORASI GERAK</h3>
+                    <p class="text-xs text-amber-700 font-medium mt-1">Explore Movement</p>
+                    <p class="text-xs text-slate-600 mt-3">Pelajari kosa kata gerak, action verbs, instruksi, dan kalimat sederhana.</p>
+                    <div class="mt-4 text-amber-700 font-semibold text-xs flex items-center">Buka Materi &rarr;</div>
+                </div>
+
+                <!-- Chapter 2 Card -->
+                <div onclick="openChapter(2)" class="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-2xl p-5 shadow-md hover:shadow-xl cursor-pointer transform transition hover:-translate-y-1">
+                    <div class="text-3xl mb-2">🧭</div>
+                    <span class="bg-emerald-200 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">BAB 2</span>
+                    <h3 class="font-extrabold text-emerald-900 text-lg mt-2">BERPIKIR CERDAS, BERGERAK TAKTIS</h3>
+                    <p class="text-xs text-emerald-700 font-medium mt-1">Think Smart, Move Tactically</p>
+                    <p class="text-xs text-slate-600 mt-3">Pelajari arah, posisi, strategi, kemampuan (can), dan tanya jawab.</p>
+                    <div class="mt-4 text-emerald-700 font-semibold text-xs flex items-center">Buka Materi &rarr;</div>
+                </div>
+
+                <!-- Chapter 3 Card -->
+                <div onclick="openChapter(3)" class="bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-300 rounded-2xl p-5 shadow-md hover:shadow-xl cursor-pointer transform transition hover:-translate-y-1">
+                    <div class="text-3xl mb-2">⚖️</div>
+                    <span class="bg-purple-200 text-purple-800 text-xs font-bold px-2.5 py-1 rounded-full">BAB 3</span>
+                    <h3 class="font-extrabold text-purple-900 text-lg mt-2">ATURAN, BERMAIN SERU</h3>
+                    <p class="text-xs text-purple-700 font-medium mt-1">Rules Make Playing Fun</p>
+                    <p class="text-xs text-slate-600 mt-3">Pelajari aturan permainan, sikap sportif, perintah, dan kerja sama tim.</p>
+                    <div class="mt-4 text-purple-700 font-semibold text-xs flex items-center">Buka Materi &rarr;</div>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 text-center text-sm text-blue-800">
+                💡 <b>Tips:</b> Pelajari ketiga bab di atas dengan baik sebelum menjawab 50 soal kuis agar mendapatkan skor sempurna 1.000!
+            </div>
+        </section>
+
+        <!-- 4. CHAPTER DETAIL MODAL / VIEW -->
+        <section id="screen-chapter-detail" class="hidden bg-white rounded-3xl shadow-2xl p-6 sm:p-8 border-4 border-indigo-400">
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-200">
+                <button onclick="backToLessonMenu()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-xl text-sm font-bold flex items-center space-x-1">
+                    <span>⬅️ Kembali ke Menu Materi</span>
+                </button>
+                <button onclick="startQuizFromMenu()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-bold">
+                    ⚡ Lanjut ke Kuis
+                </button>
+            </div>
+            <div id="chapter-content-container">
+                <!-- Dynamic Content injected via JS -->
+            </div>
+        </section>
+
+        <!-- 5. QUIZ SCREEN -->
+        <section id="screen-quiz" class="hidden bg-white rounded-3xl shadow-2xl p-6 sm:p-8 border-4 border-blue-500">
+            <!-- Quiz Top Bar -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 mb-6 border-b border-slate-200 gap-3">
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span id="quiz-chapter-badge" class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">Bab 1</span>
+                        <span class="text-xs font-semibold text-slate-500" id="quiz-progress-text">Soal 1 dari 50</span>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-blue-700 mt-1">ENGLISH ADVENTURE QUIZ</h2>
+                </div>
+                <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end">
+                    <div class="bg-emerald-50 border border-emerald-300 px-4 py-1.5 rounded-xl text-emerald-800 font-bold text-sm">
+                        ⭐ Skor: <span id="current-score">0</span>
+                    </div>
+                    <button onclick="openChapterFromQuiz()" class="bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1">
+                        <span>📚 Kembali ke Materi</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-200 h-3 rounded-full mb-6 overflow-hidden">
+                <div id="quiz-progress-bar" class="bg-blue-600 h-full w-0 transition-all duration-300"></div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="mb-6">
+                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1" id="question-difficulty-tag">Tingkat: Mudah</div>
+                <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-4" id="question-text">Pertanyaan akan muncul di sini...</h3>
+
+                <!-- Options Grid -->
+                <div id="options-container" class="grid grid-cols-1 gap-3">
+                    <!-- Options injected via JS -->
+                </div>
+            </div>
+
+            <!-- Answer Feedback & Explanation Box (Hidden initially) -->
+            <div id="feedback-box" class="hidden rounded-2xl p-5 mb-6 border-2 transition-all">
+                <div id="feedback-header" class="font-extrabold text-lg mb-1 flex items-center space-x-2"></div>
+                <p id="feedback-message" class="text-sm font-medium mb-3"></p>
+                <div class="bg-white/80 p-3 rounded-xl border border-slate-200 text-xs sm:text-sm">
+                    <span class="font-bold text-slate-700">📖 Pembahasan:</span>
+                    <p id="feedback-explanation" class="mt-1 text-slate-600"></p>
+                </div>
+            </div>
+
+            <!-- Next Button -->
+            <div class="flex justify-end">
+                <button id="next-question-btn" onclick="nextQuestion()" class="hidden bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition transform hover:scale-105 flex items-center space-x-2">
+                    <span>➡️ NEXT QUESTION</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 6. RESULT SCREEN -->
+        <section id="screen-result" class="hidden bg-white rounded-3xl shadow-2xl p-6 sm:p-10 border-4 border-amber-400 text-center">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-6xl sm:text-7xl mb-4 animate-bounce-slow">🎉🏆✨</div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-amber-600 mb-2">QUIZ COMPLETED!</h2>
+                <p class="text-lg font-semibold text-slate-600 mb-6" id="result-greeting">Congratulations, [NAMA]!</p>
+
+                <div class="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-3xl p-6 mb-8 shadow-inner">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-amber-100">
+                            <span class="text-xs text-slate-500 block">Final Score</span>
+                            <span class="text-2xl sm:text-3xl font-extrabold text-amber-600" id="res-score">0</span>
+                            <span class="text-xs text-slate-400 block">/ 1000</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-emerald-100">
+                            <span class="text-xs text-slate-500 block">Benar (Correct)</span>
+                            <span class="text-2xl sm:text-3xl font-extrabold text-emerald-600" id="res-correct">0</span>
+                            <span class="text-xs text-slate-400 block">Soal</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-red-100">
+                            <span class="text-xs text-slate-500 block">Salah (Incorrect)</span>
+                            <span class="text-2xl sm:text-3xl font-extrabold text-red-500" id="res-incorrect">0</span>
+                            <span class="text-xs text-slate-400 block">Soal</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-blue-100">
+                            <span class="text-xs text-slate-500 block">Persentase</span>
+                            <span class="text-2xl sm:text-3xl font-extrabold text-blue-600" id="res-percentage">0%</span>
+                            <span class="text-xs text-slate-400 block">Nilai</span>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-sm font-medium text-slate-700" id="result-motivation">Keep learning English. You are doing great!</p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="openCertificate()" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg transform transition hover:scale-105 flex items-center space-x-2">
+                        <span>🏆 VIEW CERTIFICATE</span>
+                    </button>
+                    <button onclick="goToLessonMenu()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg transform transition hover:scale-105 flex items-center space-x-2">
+                        <span>📚 REVIEW LESSONS</span>
+                    </button>
+                    <button onclick="restartQuiz()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold px-6 py-3.5 rounded-xl shadow-md transform transition hover:scale-105 flex items-center space-x-2">
+                        <span>🔄 PLAY AGAIN</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. CERTIFICATE SCREEN -->
+        <section id="screen-certificate" class="hidden">
+            <div class="flex justify-between items-center mb-6 no-print">
+                <button onclick="backToResult()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-xl text-sm font-bold">
+                    ⬅️ Kembali ke Hasil
+                </button>
+                <div class="flex space-x-3">
+                    <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md flex items-center space-x-2">
+                        <span>🖨️ Cetak / Print</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Printable Certificate Box -->
+            <div id="certificate-print-area" class="bg-white rounded-3xl shadow-2xl p-8 sm:p-12 border-8 border-amber-300 max-w-4xl mx-auto text-center relative overflow-hidden">
+                <!-- Decorative background elements -->
+                <div class="absolute -top-12 -left-12 w-32 h-32 bg-amber-100 rounded-full opacity-50 pointer-events-none"></div>
+                <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-blue-100 rounded-full opacity-50 pointer-events-none"></div>
+
+                <div class="border-4 border-dashed border-amber-400 p-6 sm:p-10 rounded-2xl">
+                    <div class="text-4xl sm:text-5xl mb-2">🎓 ⭐ 🏆</div>
+                    <h4 class="text-xs sm:text-sm font-extrabold tracking-widest text-amber-700 uppercase">CERTIFICATE OF ACHIEVEMENT</h4>
+                    <h2 class="text-2xl sm:text-4xl font-black text-slate-800 mt-1 mb-2">ENGLISH ADVENTURE</h2>
+                    <p class="text-xs sm:text-sm text-blue-600 font-bold mb-6">GRADE 5 ELEMENTARY SCHOOL (SD/MI) – SEMESTER 1</p>
+
+                    <p class="text-xs sm:text-sm text-slate-600 mb-2">This certificate is proudly presented to:</p>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold text-blue-700 underline decoration-amber-400 underline-offset-8 mb-6" id="cert-username">[NAMA SISWA]</h3>
+
+                    <p class="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto mb-6">
+                        For successfully completing all 50 interactive English learning questions and mastering Chapters 1 to 3 with exceptional dedication and enthusiasm!
+                    </p>
+
+                    <div class="flex justify-center items-center space-x-6 sm:space-x-12 mb-8 bg-amber-50 p-4 rounded-2xl border border-amber-200 max-w-md mx-auto">
+                        <div>
+                            <span class="text-xs text-slate-500 block font-medium">Final Score</span>
+                            <span class="text-xl sm:text-2xl font-black text-amber-700" id="cert-score">1000 / 1000</span>
+                        </div>
+                        <div class="h-8 w-px bg-amber-300"></div>
+                        <div>
+                            <span class="text-xs text-slate-500 block font-medium">Correct Answers</span>
+                            <span class="text-xl sm:text-2xl font-black text-emerald-700" id="cert-correct">50 / 50</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 pt-6 border-t border-slate-200 gap-4">
+                        <div>
+                            <p class="font-bold text-slate-700">Date: <span id="cert-date">21 September 2026</span></p>
+                        </div>
+                        <div class="text-center">
+                            <div class="font-extrabold text-blue-600 text-sm">ENGLISH ADVENTURE ACADEMY</div>
+                            <p class="text-[10px]">Official Grade 5 SD/MI Curriculum Program</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-slate-700">Developer: Giga Inovation</p>
+                            <p class="text-[10px]">Phone: 081329200985</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-3 text-center text-xs text-slate-500 mt-auto">
+        Developer: Giga Inovation | 081329200985
+    </footer>
+
+    <script>
+        // --- STATE MANAGEMENT ---
+        let state = {
+            username: localStorage.getItem('ea_username') || '',
+            currentScreen: 'welcome', // welcome, instructions, lessons, chapter, quiz, result, certificate
+            soundEnabled: true,
+            currentQuestionIndex: parseInt(localStorage.getItem('ea_qindex')) || 0,
+            score: parseInt(localStorage.getItem('ea_score')) || 0,
+            answersRecord: JSON.parse(localStorage.getItem('ea_answers')) || {}, // index -> chosenOption
+            selectedChapterView: 1,
+            quizActiveChapter: null
+        };
+
+        // --- SPEECH SYNTHESIS HELPER ---
+        function speakText(text) {
+            if (!state.soundEnabled) return;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Stop previous utterance
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function toggleSound() {
+            state.soundEnabled = !state.soundEnabled;
+            document.getElementById('sound-icon').textContent = state.soundEnabled ? '🔊' : '🔇';
+            document.getElementById('sound-text').textContent = state.soundEnabled ? 'Suara On' : 'Suara Off';
+        }
+
+        // --- SCREEN NAVIGATION ---
+        function switchScreen(screenId) {
+            const screens = ['screen-welcome', 'screen-instructions', 'screen-lessons', 'screen-chapter-detail', 'screen-quiz', 'screen-result', 'screen-certificate'];
+            screens.forEach(s => {
+                document.getElementById(s).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+            state.currentScreen = screenId;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleStartLearning() {
+            const nameInput = document.getElementById('username-input');
+            const name = nameInput.value.trim();
+            const errorEl = document.getElementById('name-error');
+
+            if (!name) {
+                errorEl.classList.remove('hidden');
+                nameInput.classList.add('border-red-500');
+                return;
+            }
+
+            errorEl.classList.add('hidden');
+            state.username = name;
+            localStorage.setItem('ea_username', name);
+
+            // Update Header user badge
+            document.getElementById('display-username').textContent = name;
+            document.getElementById('user-badge').classList.remove('hidden');
+
+            speakText(`Hello, ${name}! Welcome to English Adventure, Grade Five. Let's learn English and have fun!`);
+            switchScreen('screen-instructions');
+        }
+
+        function goToLessonMenu() {
+            speakText("Let's explore the lessons.");
+            switchScreen('screen-lessons');
+        }
+
+        function startQuizFromMenu() {
+            switchScreen('screen-quiz');
+            loadQuestion();
+        }
+
+        // --- LESSON DATA & CHAPTERS ---
+        const chapterData = {
+            1: {
+                title: "BAB 1 – EKSPLORASI GERAK",
+                theme: "ENGLISH THEME: EXPLORE MOVEMENT",
+                description: "Materi Bahasa Inggris bertema gerakan dan aktivitas fisik.",
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-amber-50 border-2 border-amber-200 p-6 rounded-2xl">
+                            <h3 class="font-extrabold text-amber-900 text-xl mb-2">🏃‍♂️ BAB 1: EXPLORE MOVEMENT</h3>
+                            <p class="text-sm text-amber-800">Pada bab ini, kita akan mempelajari berbagai kosakata gerakan fisik, kata kerja tindakan (action verbs), instruksi sederhana, dan kalimat present continuous dalam Bahasa Inggris.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-blue-700 mb-3">1. Vocabulary of Movements (Kosakata Gerak)</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><b>Walk</b> = Berjalan</li>
+                                    <li><b>Run</b> = Berlari</li>
+                                    <li><b>Jump</b> = Melompat</li>
+                                    <li><b>Hop</b> = Melompat dengan satu kaki</li>
+                                    <li><b>Skip</b> = Melompat kecil / melewati</li>
+                                    <li><b>Turn</b> = Berputar</li>
+                                    <li><b>Stretch</b> = Meregangkan / mengulurkan</li>
+                                    <li><b>Bend</b> = Membungkuk</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-blue-700 mb-3">2. Action Verbs (Kata Kerja Tindakan)</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><b>Walk forward.</b> = Berjalanlah ke depan.</li>
+                                    <li><b>Run slowly.</b> = Berlarilah dengan pelan.</li>
+                                    <li><b>Jump high.</b> = Lompatlah tinggi.</li>
+                                    <li><b>Turn around.</b> = Berputarlah.</li>
+                                    <li><b>Stretch your arms.</b> = Rentangkan lenganmu.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-blue-700 mb-3">3. Simple Instructions & Sentences</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><b>Stand up.</b> = Berdirilah.</li>
+                                    <li><b>Sit down.</b> = Duduklah.</li>
+                                    <li><b>I can run.</b> = Saya bisa berlari.</li>
+                                    <li><b>She is walking.</b> = Dia (perempuan) sedang berjalan.</li>
+                                    <li><b>They are playing.</b> = Mereka sedang bermain.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-blue-700 mb-3">4. Reading Comprehension (Bacaan Pendek)</h4>
+                                <p class="text-xs sm:text-sm text-slate-700 italic bg-slate-50 p-3 rounded-xl border border-slate-200 mb-2">
+                                    "Every morning, Budi does exercise in the school yard. He can run fast and jump high. Now, Budi and his friends are walking forward together. They love moving and staying healthy."
+                                </p>
+                                <p class="text-xs text-slate-500">Arti: Setiap pagi, Budi berolahraga di lapangan sekolah. Dia bisa berlari cepat dan melompat tinggi. Sekarang, Budi dan teman-temannya sedang berjalan ke depan bersama-sama. Mereka suka bergerak dan tetap sehat.</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            2: {
+                title: "BAB 2 – BERPIKIR CERDAS, BERGERAK TAKTIS",
+                theme: "ENGLISH THEME: THINK SMART, MOVE TACTICALLY",
+                description: "Materi Bahasa Inggris bertema strategi, arah, posisi, dan pengambilan keputusan sederhana.",
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-emerald-50 border-2 border-emerald-200 p-6 rounded-2xl">
+                            <h3 class="font-extrabold text-emerald-900 text-xl mb-2">🧭 BAB 2: THINK SMART, MOVE TACTICALLY</h3>
+                            <p class="text-sm text-emerald-800">Pada bab ini, kita mempelajari ungkapan arah (directions), kemampuan (can), posisi, dan kerja sama tim dalam permainan.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-emerald-700 mb-3">1. Vocabulary (Kosakata Strategi & Arah)</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><b>Left</b> = Kiri</li>
+                                    <li><b>Right</b> = Kanan</li>
+                                    <li><b>Forward</b> = Ke depan</li>
+                                    <li><b>Backward</b> = Ke belakang</li>
+                                    <li><b>Fast</b> = Cepat</li>
+                                    <li><b>Slow</b> = Lambat</li>
+                                    <li><b>Team</b> = Tim</li>
+                                    <li><b>Partner</b> = Pasangan</li>
+                                    <li><b>Strategy</b> = Strategi</li>
+                                    <li><b>Carefully</b> = Dengan hati-hati</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-emerald-700 mb-3">2. Giving Directions & Ability</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><b>Turn left.</b> = Belok kiri.</li>
+                                    <li><b>Turn right.</b> = Belok kanan.</li>
+                                    <li><b>Go forward.</b> = Maju ke depan.</li>
+                                    <li><b>I can run fast.</b> = Saya bisa berlari cepat.</li>
+                                    <li><b>We can work together.</b> = Kita bisa bekerja sama.</li>
+                                    <li><b>Can you run fast? Yes, I can.</b> = Bisakah kamu berlari cepat? Ya, saya bisa.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                            <h4 class="font-bold text-emerald-700 mb-3">3. Reading Comprehension (Bacaan Pendek)</h4>
+                            <p class="text-xs sm:text-sm text-slate-700 italic bg-slate-50 p-3 rounded-xl border border-slate-200 mb-2">
+                                "Siti and Lina are playing a tactical game in the yard. Siti gives direction to Lina. She says, 'Turn right and go forward carefully!' Lina moves fast and reaches the finish line. They win the game because they have a good strategy."
+                            </p>
+                            <p class="text-xs text-slate-500">Arti: Siti dan Lina sedang memainkan permainan taktis di halaman. Siti memberi arah kepada Lina. Dia berkata, 'Belok kanan dan maju ke depan dengan hati-hati!' Lina bergerak cepat dan mencapai garis finis. Mereka memenangkan permainan karena memiliki strategi yang baik.</p>
+                        </div>
+                    </div>
+                `
+            },
+            3: {
+                title: "BAB 3 – ATURAN, BERMAIN SERU",
+                theme: "ENGLISH THEME: RULES MAKE PLAYING FUN",
+                description: "Materi Bahasa Inggris bertema aturan permainan dan perilaku saat bermain.",
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-purple-50 border-2 border-purple-200 p-6 rounded-2xl">
+                            <h3 class="font-extrabold text-purple-900 text-xl mb-2">⚖️ BAB 3: RULES MAKE PLAYING FUN</h3>
+                            <p class="text-sm text-purple-800">Pada bab ini, kita akan mempelajari aturan permainan, ungkapan kesopanan, kerja sama, dan sikap sportif dalam bermain.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-purple-700 mb-3">1. Vocabulary (Kosakata Aturan)</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><b>Rules</b> = Aturan</li>
+                                    <li><b>Game</b> = Permainan</li>
+                                    <li><b>Player</b> = Pemain</li>
+                                    <li><b>Win / Lose</b> = Menang / Kalah</li>
+                                    <li><b>Fair</b> = Adil</li>
+                                    <li><b>Respect</b> = Menghormati</li>
+                                    <li><b>Wait</b> = Menunggu</li>
+                                    <li><b>Listen</b> = Mendengarkan</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-purple-700 mb-3">2. Instructions & Expressions</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><b>Follow the rules.</b> = Patuhi aturan.</li>
+                                    <li><b>Wait for your turn.</b> = Tunggu giliranmu.</li>
+                                    <li><b>Be fair.</b> = Berlaku adil lah.</li>
+                                    <li><b>Do not push.</b> = Jangan mendorong.</li>
+                                    <li><b>Let's play together.</b> = Mari bermain bersama.</li>
+                                    <li><b>It's your turn.</b> = Ini giliranmu.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                            <h4 class="font-bold text-purple-700 mb-3">3. Reading Comprehension (Bacaan Pendek)</h4>
+                            <p class="text-xs sm:text-sm text-slate-700 italic bg-slate-50 p-3 rounded-xl border border-slate-200 mb-2">
+                                "Playing traditional games is very fun. However, every player must follow the rules. We must wait for our turn, respect our friends, and play safely. When everyone is fair, the game becomes wonderful and fun for everyone."
+                            </p>
+                            <p class="text-xs text-slate-500">Arti: Bermain permainan tradisional sangat menyenangkan. Namun, setiap pemain harus mematuhi aturan. Kita harus menunggu giliran kita, menghormati teman kita, dan bermain dengan aman. Ketika setiap orang bersikap adil, permainan menjadi indah dan menyenangkan bagi semua orang.</p>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function openChapter(chapterNum) {
+            state.selectedChapterView = chapterNum;
+            const container = document.getElementById('chapter-content-container');
+            container.innerHTML = chapterData[chapterNum].content;
+            switchScreen('screen-chapter-detail');
+            speakText(`Opening ${chapterData[chapterNum].title}`);
+        }
+
+        function backToLessonMenu() {
+            switchScreen('screen-lessons');
+        }
+
+        function openChapterFromQuiz() {
+            // Let them choose or jump directly to Chapter 1 or menu
+            switchScreen('screen-lessons');
+        }
+
+        // --- 50 QUIZ QUESTIONS DATA ---
+        // Bab 1: 17 questions, Bab 2: 17 questions, Bab 3: 16 questions = 50 total.
+        const quizQuestions = [
+            // --- BAB 1 (1-17) ---
+            {
+                chapter: 1, difficulty: "Mudah",
+                question: "What is the English word for 'Berjalan'?",
+                options: ["Run", "Walk", "Jump", "Hop"],
+                correct: 1,
+                explanation: "'Walk' artinya berjalan. 'Run' adalah berlari, 'Jump' melompat, dan 'Hop' melompat dengan satu kaki."
+            },
+            {
+                chapter: 1, difficulty: "Mudah",
+                question: "Choose the correct action verb: '... high.' (Melompat tinggi)",
+                options: ["Walk high", "Sit high", "Jump high", "Sleep high"],
+                correct: 2,
+                explanation: "Kata kerja yang tepat untuk melompat tinggi adalah 'Jump high'."
+            },
+            {
+                chapter: 1, difficulty: "Mudah",
+                question: "What does 'Stand up' mean in Indonesian?",
+                options: ["Duduklah", "Berdirilah", "Berjalanlah", "Berputarlah"],
+                correct: 1,
+                explanation: "'Stand up' artinya berdirilah, sedangkan 'Sit down' artinya duduklah."
+            },
+            {
+                chapter: 1, difficulty: "Mudah",
+                question: "Complete the sentence: 'I can ... fast.' (Saya bisa berlari cepat)",
+                options: ["run", "sit", "sleep", "read"],
+                correct: 0,
+                explanation: "Kata kerja yang berkaitan dengan kecepatan gerak adalah 'run' (berlari)."
+            },
+            {
+                chapter: 1, difficulty: "Sedang",
+                question: "What is the meaning of 'Stretch your arms'?",
+                options: ["Tekuk lututmu", "Rentangkan lenganmu", "Tutup matamu", "Buka bukumu"],
+                correct: 1,
+                explanation: "'Arms' artinya lengan dan 'stretch' artinya meregangkan atau merentangkan."
+            },
+            {
+                chapter: 1, difficulty: "Sedang",
+                question: "Translate into English: 'Dia (perempuan) sedang berjalan.'",
+                options: ["He is running.", "She is walking.", "They are jumping.", "I am swimming."],
+                correct: 1,
+                explanation: "Dia perempuan = She, sedang berjalan = is walking."
+            },
+            {
+                chapter: 1, difficulty: "Menantang",
+                question: "What is the difference between 'Jump' and 'Hop'?",
+                options: [
+                    "Jump uses two feet, Hop uses one foot",
+                    "Jump is running, Hop is walking",
+                    "There is no difference",
+                    "Hop is backward, Jump is forward"
+                ],
+                correct: 0,
+                explanation: "'Jump' umumnya melompat dengan dua kaki, sedangkan 'Hop' melompat dengan satu kaki."
+            },
+            {
+                chapter: 1, difficulty: "Mudah",
+                question: "What is 'Berlari' in English?",
+                options: ["Walk", "Run", "Skip", "Turn"],
+                correct: 1,
+                explanation: "'Run' adalah bahasa Inggris untuk berlari."
+            },
+            {
+                chapter: 1, difficulty: "Sedang",
+                question: "Complete the instruction: '... slowly.' (Berlarilah dengan pelan)",
+                options: ["Jump", "Run", "Sit", "Stand"],
+                correct: 1,
+                explanation: "Ungkapan instruksi gerak pelan adalah 'Run slowly'."
+            },
+            {
+                chapter: 1, difficulty: "Mudah",
+                question: "What is the meaning of 'Sit down'?",
+                options: ["Berdiri", "Duduk", "Lompat", "Lari"],
+                correct: 1,
+                explanation: "'Sit down' artinya duduklah."
+            },
+            {
+                chapter: 1, difficulty: "Sedang",
+                question: "Which one is an action verb related to movement?",
+                options: ["Eat", "Sleep", "Turn around", "Write"],
+                correct: 2,
+                explanation: "'Turn around' adalah gerakan berputar yang termasuk dalam eksplorasi gerak Bab 1."
+            },
+            {
+                chapter: 1, difficulty: "Menantang",
+                question: "Read and answer: 'Budi can run fast and jump high.' What can Budi do?",
+                options: ["Run fast and jump high", "Sleep and eat", "Read and write", "Swim and sing"],
+                correct: 0,
+                explanation: "Kalimat tersebut menyatakan Budi bisa berlari cepat (run fast) dan melompat tinggi (jump high)."
+            },
+            {
+                chapter: 1, difficulty: "Mudah",
+                question: "What is 'Melompat' in English?",
+                options: ["Jump", "Walk", "Bend", "Turn"],
+                correct: 0,
+                explanation: "'Jump' artinya melompat."
+            },
+            {
+                chapter: 1, difficulty: "Sedang",
+                question: "Complete: 'They ... playing football in the yard.'",
+                options: ["is", "am", "are", "be"],
+                correct: 2,
+                explanation: "Subjek 'They' (mereka) menggunakan 'are' dalam bentuk present continuous."
+            },
+            {
+                chapter: 1, difficulty: "Menantang",
+                question: "What does 'Bend your body' mean?",
+                options: ["Membungkukkan badanmu", "Lompat tinggi", "Berlari cepat", "Rentangkan tangan"],
+                correct: 0,
+                explanation: "'Bend' berarti membungkuk atau melipat, jadi 'Bend your body' artinya membungkukkan badanmu."
+            },
+            {
+                chapter: 1, difficulty: "Mudah",
+                question: "What is 'Berputar' in English?",
+                options: ["Turn", "Stop", "Walk", "Sit"],
+                correct: 0,
+                explanation: "'Turn' atau 'Turn around' berarti berputar."
+            },
+            {
+                chapter: 1, difficulty: "Sedang",
+                question: "Choose the correct sentence:",
+                options: ["I can jumping.", "I can jump.", "I jumping can.", "Jump I can."],
+                correct: 1,
+                explanation: "Setelah modal 'can' diikuti oleh kata kerja bentuk pertama (verb 1), yaitu 'jump'."
+            },
+
+            // --- BAB 2 (18-34) ---
+            {
+                chapter: 2, difficulty: "Mudah",
+                question: "What is the English word for 'Kiri'?",
+                options: ["Right", "Left", "Forward", "Backward"],
+                correct: 1,
+                explanation: "'Left' artinya kiri, sedangkan 'Right' adalah kanan."
+            },
+            {
+                chapter: 2, difficulty: "Mudah",
+                question: "What is the English word for 'Kanan'?",
+                options: ["Left", "Right", "Fast", "Slow"],
+                correct: 1,
+                explanation: "'Right' artinya kanan."
+            },
+            {
+                chapter: 2, difficulty: "Mudah",
+                question: "What does 'Go forward' mean?",
+                options: ["Mundur ke belakang", "Maju ke depan", "Belok kiri", "Berhenti"],
+                correct: 1,
+                explanation: "'Forward' artinya ke depan, jadi 'Go forward' artinya maju ke depan."
+            },
+            {
+                chapter: 2, difficulty: "Sedang",
+                question: "What is the meaning of 'Move backward'?",
+                options: ["Bergerak maju", "Bergerak ke belakang", "Berlari cepat", "Berputar arah"],
+                correct: 1,
+                explanation: "'Backward' artinya ke belakang."
+            },
+            {
+                chapter: 2, difficulty: "Sedang",
+                question: "Complete the dialogue: 'Can you run fast?' — 'Yes, I ...'",
+                options: ["am", "do", "can", "will"],
+                correct: 2,
+                explanation: "Pertanyaan dengan 'Can you...?' dijawab dengan 'Yes, I can' atau 'No, I can't'."
+            },
+            {
+                chapter: 2, difficulty: "Menantang",
+                question: "What is the Indonesian translation for 'We can work together as a team'?",
+                options: ["Kita bisa berlari sendiri", "Kita bisa bekerja sama sebagai sebuah tim", "Kita harus berlari cepat", "Mereka tidak punya strategi"],
+                correct: 1,
+                explanation: "'Work together' = bekerja sama, 'as a team' = sebagai sebuah tim."
+            },
+            {
+                chapter: 2, difficulty: "Mudah",
+                question: "What is 'Cepat' in English?",
+                options: ["Slow", "Fast", "Carefully", "Right"],
+                correct: 1,
+                explanation: "'Fast' artinya cepat, sedangkan 'Slow' lambat."
+            },
+            {
+                chapter: 2, difficulty: "Sedang",
+                question: "Translate: 'Belok kiri dan belok kanan.'",
+                options: ["Turn left and turn right", "Go forward and backward", "Run fast and slow", "Stand up and sit down"],
+                correct: 0,
+                explanation: "Belok kiri = Turn left, belok kanan = turn right."
+            },
+            {
+                chapter: 2, difficulty: "Mudah",
+                question: "What is 'Strategi' in English?",
+                options: ["Team", "Strategy", "Partner", "Rule"],
+                correct: 1,
+                explanation: "'Strategy' adalah bahasa Inggris untuk strategi."
+            },
+            {
+                chapter: 2, difficulty: "Sedang",
+                question: "Complete: 'Move ... to avoid obstacles.' (Dengan hati-hati)",
+                options: ["fast", "slow", "carefully", "left"],
+                correct: 2,
+                explanation: "'Carefully' artinya dengan hati-hati."
+            },
+            {
+                chapter: 2, difficulty: "Menantang",
+                question: "Siti says, 'Turn right and go forward carefully!' What is Lina's action based on the instruction?",
+                options: ["Turn left and run", "Turn right and move forward carefully", "Stop and sit down", "Jump backward"],
+                correct: 1,
+                explanation: "Instruksinya adalah belok kanan (turn right) dan maju dengan hati-hati (go forward carefully)."
+            },
+            {
+                chapter: 2, difficulty: "Mudah",
+                question: "What is 'Tim' in English?",
+                options: ["Team", "Partner", "Player", "Game"],
+                correct: 0,
+                explanation: "'Team' artinya tim."
+            },
+            {
+                chapter: 2, difficulty: "Sedang",
+                question: "What is the negative short answer for 'Can you jump high?'",
+                options: ["No, I can.", "No, I can't.", "Yes, I can't.", "No, I am not."],
+                correct: 1,
+                explanation: "Jawaban negatif untuk pertanyaan 'Can you...?' adalah 'No, I can't'."
+            },
+            {
+                chapter: 2, difficulty: "Menantang",
+                question: "Why did Siti and Lina win the game in the reading story?",
+                options: ["Because they ran without rules", "Because they have a good strategy and direction", "Because they walked slowly", "Because they played alone"],
+                correct: 1,
+                explanation: "Dalam cerita Bab 2, mereka menang karena memiliki strategi yang baik dan arah yang tepat."
+            },
+            {
+                chapter: 2, difficulty: "Mudah",
+                question: "What is 'Pasangan' in English?",
+                options: ["Team", "Partner", "Player", "Leader"],
+                correct: 1,
+                explanation: "'Partner' artinya pasangan."
+            },
+            {
+                chapter: 2, difficulty: "Sedang",
+                question: "Complete: 'I can move ...' (Dengan lambat / pelan)",
+                options: ["fast", "slowly", "right", "left"],
+                correct: 1,
+                explanation: "'Slowly' adalah bentuk adverb dari 'slow' (dengan lambat)."
+            },
+            {
+                chapter: 2, difficulty: "Menantang",
+                question: "Which sentence shows ability in tactical movement?",
+                options: ["Can you turn left?", "I can move carefully to win the game.", "Please sit down.", "Follow the rules!"],
+                correct: 1,
+                explanation: "Kalimat 'I can move carefully to win the game' menunjukkan kemampuan (ability) dalam gerakan taktis."
+            },
+
+            // --- BAB 3 (35-50) ---
+            {
+                chapter: 3, difficulty: "Mudah",
+                question: "What is the English word for 'Aturan'?",
+                options: ["Game", "Rules", "Team", "Player"],
+                correct: 1,
+                explanation: "'Rules' artinya aturan."
+            },
+            {
+                chapter: 3, difficulty: "Mudah",
+                question: "What does 'Follow the rules' mean?",
+                options: ["Langgar aturan", "Patuhi aturan", "Lupakan permainan", "Jauhi teman"],
+                correct: 1,
+                explanation: "'Follow' artinya mematuhi atau mengikuti, 'rules' adalah aturan."
+            },
+            {
+                chapter: 3, difficulty: "Mudah",
+                question: "What is the meaning of 'Wait for your turn'?",
+                options: ["Tunggu giliranmu", "Rebut giliran teman", "Lari cepat", "Duduk tenang"],
+                correct: 0,
+                explanation: "'Wait' = tunggu, 'your turn' = giliranmu."
+            },
+            {
+                chapter: 3, difficulty: "Sedang",
+                question: "Translate into English: 'Kita harus berlaku adil.'",
+                options: ["We must be fair.", "We must run fast.", "We can play alone.", "Do not play."],
+                correct: 0,
+                explanation: "Kita harus = We must, berlaku adil = be fair."
+            },
+            {
+                chapter: 3, difficulty: "Sedang",
+                question: "What does 'Do not push' mean in a game?",
+                options: ["Jangan mendorong", "Jangan berlari", "Jangan berbicara", "Jangan menang"],
+                correct: 0,
+                explanation: "'Push' artinya mendorong, 'Do not push' artinya jangan mendorong."
+            },
+            {
+                chapter: 3, difficulty: "Menantang",
+                question: "Why are rules important in playing games according to Chapter 3?",
+                options: ["To make the game unfair", "To make playing fun and safe for everyone", "To make players lose", "To stop playing"],
+                correct: 1,
+                explanation: "Judul dan materi Bab 3 menyatakan 'Rules Make Playing Fun' (Aturan membuat permainan seru dan aman)."
+            },
+            {
+                chapter: 3, difficulty: "Mudah",
+                question: "What is 'Menang' in English?",
+                options: ["Lose", "Win", "Play", "Fair"],
+                correct: 1,
+                explanation: "'Win' artinya menang, sedangkan 'Lose' kalah."
+            },
+            {
+                chapter: 3, difficulty: "Sedang",
+                question: "What is the meaning of 'Respect your friends'?",
+                options: ["Jauhi temanmu", "Hormati teman-temanmu", "Kalahkan temanmu", "Abaikan temanmu"],
+                correct: 1,
+                explanation: "'Respect' artinya menghormati."
+            },
+            {
+                chapter: 3, difficulty: "Mudah",
+                question: "What is 'Adil' in English?",
+                options: ["Fair", "Safe", "Wrong", "Bad"],
+                correct: 0,
+                explanation: "'Fair' artinya adil."
+            },
+            {
+                chapter: 3, difficulty: "Sedang",
+                question: "Complete the expression: 'Let's play ...'",
+                options: ["alone", "together", "badly", "sadly"],
+                correct: 1,
+                explanation: "'Let's play together' artinya mari bermain bersama."
+            },
+            {
+                chapter: 3, difficulty: "Menantang",
+                question: "Read and answer: 'Everyone must be fair and follow the rules.' What is the best attitude for a player?",
+                options: ["Cheating and pushing", "Being fair and respecting others", "Running away", "Not waiting for a turn"],
+                correct: 1,
+                explanation: "Sikap terbaik pemain adalah bersikap adil dan menghormati orang lain sesuai aturan."
+            },
+            {
+                chapter: 3, difficulty: "Mudah",
+                question: "What is 'Mendengarkan' in English?",
+                options: ["Listen", "Speak", "Look", "Wait"],
+                correct: 0,
+                explanation: "'Listen' artinya mendengarkan."
+            },
+            {
+                chapter: 3, difficulty: "Sedang",
+                question: "Complete: 'It's your ...' (Ini giliranmu)",
+                options: ["game", "turn", "rule", "team"],
+                correct: 1,
+                explanation: "'Your turn' artinya giliranmu."
+            },
+            {
+                chapter: 3, difficulty: "Menantang",
+                question: "What should you say when a friend does a great job in a game?",
+                options: ["Good job! / Well done!", "Go away!", "Not fair!", "Stop playing!"],
+                correct: 0,
+                explanation: "Ungkapan apresiasi saat teman melakukan hal hebat adalah 'Good job!' atau 'Well done!'."
+            },
+            {
+                chapter: 3, difficulty: "Mudah",
+                question: "What is 'Pemain' in English?",
+                options: ["Player", "Team", "Leader", "Referee"],
+                correct: 0,
+                explanation: "'Player' artinya pemain."
+            },
+            {
+                chapter: 3, difficulty: "Sedang",
+                question: "Translate: 'Kita bermain bersama.'",
+                options: ["We play together.", "They play alone.", "You are playing.", "I win the game."],
+                correct: 0,
+                explanation: "Kita = We, bermain = play, bersama = together."
+            }
+        ];
+
+        // --- QUIZ ENGINE FUNCTIONS ---
+        function loadQuestion() {
+            if (state.currentQuestionIndex >= quizQuestions.length) {
+                finishQuiz();
+                return;
+            }
+
+            const q = quizQuestions[state.currentQuestionIndex];
+            
+            // Update Progress UI
+            document.getElementById('quiz-chapter-badge').textContent = `Bab ${q.chapter} – ${q.chapter === 1 ? 'Eksplorasi Gerak' : q.chapter === 2 ? 'Berpikir Cerdas' : 'Aturan Main'}`;
+            document.getElementById('quiz-progress-text').textContent = `Soal ${state.currentQuestionIndex + 1} dari 50`;
+            document.getElementById('current-score').textContent = state.score;
+            
+            const progressPercent = ((state.currentQuestionIndex) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPercent}%`;
+
+            document.getElementById('question-difficulty-tag').textContent = `Tingkat: ${q.difficulty} (${state.currentQuestionIndex + 1}/50)`;
+            document.getElementById('question-text').textContent = q.question;
+
+            // Render Options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-2xl border-2 border-slate-200 hover:border-blue-400 bg-slate-50 hover:bg-blue-50 font-medium text-slate-800 transition transform active:scale-98 flex items-center justify-between";
+                btn.innerHTML = `<span><strong class="mr-2 text-blue-600">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>`;
+                btn.onclick = () => selectAnswer(idx);
+                
+                // If already answered in this session (e.g. review or if persisted)
+                if (state.answersRecord[state.currentQuestionIndex] !== undefined) {
+                    btn.disabled = true;
+                    if (idx === q.correct) {
+                        btn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-900');
+                    } else if (idx === state.answersRecord[state.currentQuestionIndex]) {
+                        btn.classList.add('border-red-400', 'bg-red-50', 'text-red-900');
+                    }
+                }
+                optionsContainer.appendChild(btn);
+            });
+
+            // Feedback box management
+            const feedbackBox = document.getElementById('feedback-box');
+            const nextBtn = document.getElementById('next-question-btn');
+
+            if (state.answersRecord[state.currentQuestionIndex] !== undefined) {
+                showFeedbackUI(state.answersRecord[state.currentQuestionIndex] === q.correct, q);
+                nextBtn.classList.remove('hidden');
+            } else {
+                feedbackBox.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+            }
+        }
+
+        function selectAnswer(selectedIndex) {
+            // Prevent changing if already answered
+            if (state.answersRecord[state.currentQuestionIndex] !== undefined) return;
+
+            const q = quizQuestions[state.currentQuestionIndex];
+            const isCorrect = selectedIndex === q.correct;
+
+            state.answersRecord[state.currentQuestionIndex] = selectedIndex;
+
+            if (isCorrect) {
+                state.score += 20;
+                speakText(`Correct, ${state.username}! Excellent work! Your answer is correct!`);
+            } else {
+                speakText(`Not quite right, ${state.username}. Don't give up! Let's learn from the explanation.`);
+            }
+
+            localStorage.setItem('ea_score', state.score);
+            localStorage.setItem('ea_answers', JSON.stringify(state.answersRecord));
+            localStorage.setItem('ea_qindex', state.currentQuestionIndex);
+
+            document.getElementById('current-score').textContent = state.score;
+
+            // Re-render options to show correctness
+            loadQuestion();
+        }
+
+        function showFeedbackUI(isCorrect, q) {
+            const feedbackBox = document.getElementById('feedback-box');
+            const feedbackHeader = document.getElementById('feedback-header');
+            const feedbackMsg = document.getElementById('feedback-message');
+            const feedbackExp = document.getElementById('feedback-explanation');
+            const nextBtn = document.getElementById('next-question-btn');
+
+            feedbackBox.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+
+            if (isCorrect) {
+                feedbackBox.className = "rounded-2xl p-5 mb-6 border-2 border-emerald-400 bg-emerald-50 transition-all";
+                feedbackHeader.innerHTML = `<span class="text-emerald-600 text-xl">✓ CORRECT!</span>`;
+                feedbackMsg.innerHTML = `<span class="font-bold text-emerald-900">Excellent, ${state.username}! Your answer is correct! (+20 Points)</span>`;
+            } else {
+                feedbackBox.className = "rounded-2xl p-5 mb-6 border-2 border-red-400 bg-red-50 transition-all";
+                feedbackHeader.innerHTML = `<span class="text-red-600 text-xl">✗ NOT QUITE RIGHT</span>`;
+                const correctOptionText = q.options[q.correct];
+                feedbackMsg.innerHTML = `<span class="font-bold text-red-900">Don't give up, ${state.username}! The correct answer is: <span class="underline">${correctOptionText}</span></span>`;
+            }
+
+            feedbackExp.textContent = q.explanation;
+        }
+
+        function nextQuestion() {
+            state.currentQuestionIndex++;
+            localStorage.setItem('ea_qindex', state.currentQuestionIndex);
+            loadQuestion();
+        }
+
+        // --- FINISH & RESULTS ---
+        function finishQuiz() {
+            switchScreen('screen-result');
+            
+            let correctCount = 0;
+            let incorrectCount = 0;
+
+            quizQuestions.forEach((q, idx) => {
+                if (state.answersRecord[idx] === q.correct) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
+            });
+
+            const percentage = Math.round((correctCount / quizQuestions.length) * 100);
+
+            document.getElementById('result-greeting').textContent = `Congratulations, ${state.username}!`;
+            document.getElementById('res-score').textContent = state.score;
+            document.getElementById('res-correct').textContent = correctCount;
+            document.getElementById('res-incorrect').textContent = incorrectCount;
+            document.getElementById('res-percentage').textContent = `${percentage}%`;
+
+            let motivation = "Keep learning English. You are doing great!";
+            if (percentage >= 90) motivation = "Outstanding! You are a true English star!";
+            else if (percentage >= 75) motivation = "Great job! Your English skills are very impressive!";
+            document.getElementById('result-motivation').textContent = motivation;
+
+            speakText(`Congratulations, ${state.username}! You have completed all 50 questions with a score of ${state.score}. Keep learning English!`);
+        }
+
+        function openCertificate() {
+            switchScreen('screen-certificate');
+            
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (state.answersRecord[idx] === q.correct) correctCount++;
+            });
+
+            document.getElementById('cert-username').textContent = state.username;
+            document.getElementById('cert-score').textContent = `${state.score} / 1000`;
+            document.getElementById('cert-correct').textContent = `${correctCount} out of 50 questions`;
+            
+            const optionsDate = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('cert-date').textContent = new Date().toLocaleDateString('id-ID', optionsDate);
+        }
+
+        function backToResult() {
+            switchScreen('screen-result');
+        }
+
+        function restartQuiz() {
+            state.currentQuestionIndex = 0;
+            state.score = 0;
+            state.answersRecord = {};
+            localStorage.removeItem('ea_score');
+            localStorage.removeItem('ea_answers');
+            localStorage.removeItem('ea_qindex');
+
+            switchScreen('screen-quiz');
+            loadQuestion();
+        }
+
+        // Initialize check on load if username exists
+        window.onload = function() {
+            if (state.username) {
+                document.getElementById('username-input').value = state.username;
+                document.getElementById('display-username').textContent = state.username;
+                document.getElementById('user-badge').classList.remove('hidden');
+            }
+        };
+    </script>
+</body>
+</html>
